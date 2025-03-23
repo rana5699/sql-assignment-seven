@@ -1,8 +1,5 @@
 -- Active: 1742315814543@@127.0.0.1@5432@bookstore_db@public
 
--- Create a new database
-CREATE DATABASE bookstore_db;
-
 -- Create a "books" table
 CREATE TABLE books (
     id SERIAL NOT NULL PRIMARY KEY,
@@ -13,9 +10,9 @@ CREATE TABLE books (
     published_year INT
 );
 
--- ! TODO!
-DROP TABLE books
 
+
+-- Insert Sample "books" Data
 INSERT INTO books (title, author, price, stock, published_year)    VALUES
     ('The Pragmatic Programmer', 'Andrew Hunt', 40.00, 10, 1999),
     ('Clean Code', 'Robert C. Martin', 35.00, 5, 2008),
@@ -23,6 +20,7 @@ INSERT INTO books (title, author, price, stock, published_year)    VALUES
     ('Refactoring', 'Martin Fowler', 50.00, 3, 1999),
     ('Database Design Principles', 'Jane Smith', 20.00, 0, 2018);
 
+-- All books
 SELECT * FROM books;
 
 -- Create a "customers" table 
@@ -33,16 +31,15 @@ CREATE TABLE customers (
      joined_date DATE DEFAULT CURRENT_DATE
 )
 
--- ! TODO!
-DROP TABLE customers
-
+-- Insert Sample "customers" Data
 INSERT INTO customers (id, name, email, joined_date) 
     VALUES
-    -- (1, 'Alice', 'alice@email.com', '2023-01-10'),
-    -- (2, 'Bob', 'bob@email.com', '2022-05-15'),
+    (1, 'Alice', 'alice@email.com', '2023-01-10'),
+    (2, 'Bob', 'bob@email.com', '2022-05-15'),
     (3, 'Charlie', 'charlie@email.com', '2023-06-20');
 
 
+-- All customers
 SELECT * FROM customers;
 
 -- Create an "orders" table
@@ -54,15 +51,15 @@ CREATE TABLE orders (
      order_date DATE  DEFAULT CURRENT_TIMESTAMP
 )
 
--- ! TODO!
-DROP TABLE orders
 
+-- Insert Sample "orders" Data
 INSERT INTO orders (customer_id,book_id,quantity)
     VALUES
     (1,2,1),
     ( 2,1,1),
     (1,3,2)
 
+-- All Orders
 SELECT * FROM orders;
 
 -- Find books that are out of stock.
@@ -75,7 +72,8 @@ SELECT * FROM books
     LIMIT 1
 
 -- Find the total number of orders placed by each customer.
-SELECT name, COUNT(*) AS total_orders FROM orders
+SELECT name, COUNT(*) AS total_orders 
+    FROM orders
     JOIN customers ON orders.customer_id = customers.id
     GROUP BY name
 
