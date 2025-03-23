@@ -72,3 +72,26 @@ GROUP BY ক্লোসটি SQL এ ব্যবহৃত হয়, এক�
     JOIN customers ON orders.customer_id = 
     customers.id
     GROUP BY name
+
+### How can you calculate aggregate functions like COUNT(), SUM(), and AVG() in PostgreSQL?
+
+PostgreSQL-এ COUNT(), SUM(), এবং AVG() এর মতো এগ্রিগেশন ফাংশন ব্যবহার করে একটি নির্দিষ্ট শর্ত পূর্ণকারী ডেটার উপর গণনা বা গাণিতিক অপারেশন করা হয়। এগুলো সাধারণত GROUP BY ক্লজের সাথে ব্যবহৃত হয়, তবে শর্ত না থাকলেও এগুলো ব্যবহার করা যেতে পারে।
+
+## COUNT()
+    SELECT name, COUNT(*) AS total_orders 
+    FROM orders
+    JOIN customers 
+    ON orders.customer_id = customers.id
+    GROUP BY name
+
+## SUM()
+    SELECT SUM(b.price * o.quantity) 
+    AS total_revenue
+    FROM orders 
+    AS o
+    JOIN books AS b ON o.book_id = b.id
+
+## AVG()
+    SELECT AVG(b.price)::NUMERIC(10,2) 
+    AS avg_book_price 
+    FROM books AS b
